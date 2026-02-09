@@ -23,6 +23,18 @@ uv pip install -e .
 uv run dreambot --host 192.168.1.10 --port 25565 --username DreamBot
 ```
 
+### Offline / dry-run mode
+If you are still wiring Mineflayer bindings, you can validate the strategy loop
+without connecting to a server:
+```bash
+uv run dreambot --dry-run --cycles 5
+```
+
+### Adapter selection
+```bash
+uv run dreambot --adapter null --cycles 3
+```
+
 ## What is implemented
 DreamBot ships a production-grade foundation:
 - LAN connectivity checks with clear failure messages.

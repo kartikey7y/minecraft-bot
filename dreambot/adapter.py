@@ -51,6 +51,10 @@ class NullAdapter:
 
 
 @dataclass
+class MineflayerUnavailableError(RuntimeError):
+    """Raised when Mineflayer bindings are not available."""
+
+
 class MineflayerAdapter:
     """Thin Python wrapper for Mineflayer-compatible runtimes."""
 
@@ -59,14 +63,21 @@ class MineflayerAdapter:
     username: str
     _client: Optional[object] = None
 
-    def connect(self) -> None:
+    @staticmethod
+    def is_available() -> bool:
         try:
-            from mineflayer import create_bot  # type: ignore
-        except ImportError as exc:  # pragma: no cover - runtime dependency
-            raise RuntimeError(
-                "mineflayer Python bindings are required. "
-                "Install a Mineflayer-compatible Python package or bridge."
-            ) from exc
+            import mineflayer  # type: ignore  # noqa: F401
+        except ImportError:
+            return False
+        return True
+
+    def connect(self) -> None:
+        if not self.is_available():
+            raise MineflayerUnavailableError(
+                "Mineflayer bindings are not available. "
+                "Install a compatible Python package or use --dry-run."
+            )
+        from mineflayer import create_bot  # type: ignore
 
         self._client = create_bot(
             {
