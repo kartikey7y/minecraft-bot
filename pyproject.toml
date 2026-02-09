@@ -1,0 +1,15 @@
+[project]
+name = "dreambot"
+version = "0.1.0"
+description = "Python-first Mineflayer agent with LAN connectivity and pro-level strategy scaffolding."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "DreamBot" }]
+dependencies = []
+
+[project.scripts]
+dreambot = "dreambot.cli:main"
+
+[tool.uv]
+package = true
