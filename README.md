@@ -35,6 +35,13 @@ uv run dreambot --dry-run --cycles 5
 uv run dreambot --adapter null --cycles 3
 ```
 
+### Auto adapter (default)
+By default DreamBot will attempt a Mineflayer adapter and fall back to the
+offline adapter if bindings are missing:
+```bash
+uv run dreambot --adapter auto --cycles 3
+```
+
 ## What is implemented
 DreamBot ships a production-grade foundation:
 - LAN connectivity checks with clear failure messages.

@@ -25,8 +25,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--adapter",
-        choices=["mineflayer", "null"],
-        default="mineflayer",
+        choices=["auto", "mineflayer", "null"],
+        default="auto",
         help="Select which adapter to use.",
     )
     parser.add_argument(
@@ -61,12 +61,23 @@ def main() -> int:
 
     if args.dry_run or args.adapter == "null":
         adapter = NullAdapter()
-    else:
+    elif args.adapter == "mineflayer":
         adapter = MineflayerAdapter(
             host=args.host,
             port=args.port,
             username=args.username,
         )
+    else:
+        if MineflayerAdapter.is_available():
+            adapter = MineflayerAdapter(
+                host=args.host,
+                port=args.port,
+                username=args.username,
+            )
+        else:
+            print("[WARN] Mineflayer bindings not available; falling back to NullAdapter.")
+            print("Hint: Install Mineflayer-compatible bindings or use --adapter mineflayer.")
+            adapter = NullAdapter()
     memory = MemoryStore(Path(args.memory_path))
     brain = StrategyBrain()
 
