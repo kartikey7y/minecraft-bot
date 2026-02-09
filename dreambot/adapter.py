@@ -55,6 +55,7 @@ class MineflayerUnavailableError(RuntimeError):
     """Raised when Mineflayer bindings are not available."""
 
 
+@dataclass
 class MineflayerAdapter:
     """Thin Python wrapper for Mineflayer-compatible runtimes."""
 
