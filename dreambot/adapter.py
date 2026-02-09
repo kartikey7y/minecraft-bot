@@ -50,7 +50,6 @@ class NullAdapter:
         return None
 
 
-@dataclass
 class MineflayerUnavailableError(RuntimeError):
     """Raised when Mineflayer bindings are not available."""
 
